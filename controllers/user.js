@@ -3,12 +3,14 @@ const User = require("../models/user.js");
 async function handleGetAllUsers(req, res) {
   const allDBUsers = await User.find({});
   return res.status(200).json(allDBUsers);
+  console.log("Run: handleGetAllUsers")
 }
 
 async function handleGetUserById(req, res) {
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).json({ Message: "User not found" });
   return res.status(200).json(user);
+  console.log("Run: handleGetUserById")
 }
 
 async function handleUpdateUserById(req, res) {
@@ -21,11 +23,13 @@ async function handleUpdateUserById(req, res) {
   });
 
   return res.json({ status: "success" });
+  console.log("Run: handleUpdateUserById")
 }
 
 async function handleDeleteUserById(req, res) {
   await User.findOneAndDelete(req.params.id);
   return res.json({ status: "success" });
+  console.log("Run: handleDeleteUserById")
 }
 
 async function handleCreateNewUser (req, res) {
@@ -52,6 +56,8 @@ async function handleCreateNewUser (req, res) {
     console.log("Result", result);
   
     return res.status(201).json({ msg: "Success", id: result._id });
+
+    console.log("Run: handleCreateNewUser")
 }
 
 module.exports = {
