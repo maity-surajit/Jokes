@@ -3,14 +3,12 @@ const User = require("../models/user.js");
 async function handleGetAllUsers(req, res) {
   const allDBUsers = await User.find({});
   return res.status(200).json(allDBUsers);
-  console.log("Run: handleGetAllUsers")
 }
 
 async function handleGetUserById(req, res) {
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).json({ Message: "User not found" });
   return res.status(200).json(user);
-  console.log("Run: handleGetUserById")
 }
 
 async function handleUpdateUserById(req, res) {
@@ -23,41 +21,37 @@ async function handleUpdateUserById(req, res) {
   });
 
   return res.json({ status: "success" });
-  console.log("Run: handleUpdateUserById")
 }
 
 async function handleDeleteUserById(req, res) {
   await User.findOneAndDelete(req.params.id);
   return res.json({ status: "success" });
-  console.log("Run: handleDeleteUserById")
 }
 
-async function handleCreateNewUser (req, res) {
-    const body = req.body;
+async function handleCreateNewUser(req, res) {
+  const body = req.body;
 
-    if (
-      !body ||
-      !body.first_name ||
-      !body.last_name ||
-      !body.email ||
-      !body.gender ||
-      !body.job_title
-    ) {
-      return res.status(400).json({ Message: "All fields are required..." });
-    }
-  
-    const result = await User.create({
-      firstName: body.first_name,
-      lastName: body.last_name,
-      email: body.email,
-      gender: body.gender,
-      jobTitle: body.job_title,
-    });
-    console.log("Result", result);
-  
-    return res.status(201).json({ msg: "Success", id: result._id });
+  if (
+    !body ||
+    !body.first_name ||
+    !body.last_name ||
+    !body.email ||
+    !body.gender ||
+    !body.job_title
+  ) {
+    return res.status(400).json({ Message: "All fields are required..." });
+  }
 
-    console.log("Run: handleCreateNewUser")
+  const result = await User.create({
+    firstName: body.first_name,
+    lastName: body.last_name,
+    email: body.email,
+    gender: body.gender,
+    jobTitle: body.job_title,
+  });
+  console.log("Result", result);
+
+  return res.status(201).json({ msg: "Success", id: result._id });
 }
 
 module.exports = {
